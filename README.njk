@@ -1,0 +1,78 @@
+{% include "module-header" %}
+
+# Synopsis
+
+```ts
+import rmUp from "rm-up";
+
+await rmUp("generated/template/db/ddl");
+
+await rmUp(["generated/lib/math", "generated/util/helper"], { cwd: "/path/to/project", stop: "." });
+```
+
+# Details
+
+`rmUp` function deletes files or empty directories and their empty parents from bottom to up.
+First deletes given files or directories, then checks whether their parent directories are empty and deletes them if empty.
+Then checks parent's parents and so on.
+
+It's direction is reverse of `rm -rf` or `deltree` command.
+
+Ignores system junk files such as `.DS_Store` and `Thumbs.db`.
+
+For CLI, please see [rm-up-cli](https://github.com/ozum/rm-up-cli).
+
+**Why do I need this?**
+
+It is most useful when you create a file in a deep path programmatically and want to delete whole created tree, but not sure if other files are added somewhere between by others.
+
+For example you created "`generated/template/db/ddl/create.sql`" in your project "`/path/to/project`" and want to delete whole created tree.
+
+**Example 1**
+
+```ts
+await rmUp("generated/template/db/ddl/create.sql", { cwd: "/path/to/project" });
+```
+
+<pre>
+project                      project                        project
+└─generated/                 <s>└─generated/</s>
+  └─template/                  <s>└─template/</s>
+    └─db/           --▶          <s>└─db/</s>            --▶
+      └─ddl/                       <s>└─ddl/</s>
+        └─create.sql                 <s>└─create.sql</s>
+</pre>
+
+`create.sql` file would be deleted, `ddl` become empty and deleted, `db` become empty and deleted, so `template` and `generated` directories are deleted likewise.
+
+**Example 2**
+
+Same options for a little different directory tree:
+
+```ts
+await rmUp("generated/template/db/ddl/create.sql", { cwd: "/path/to/project" });
+```
+
+<pre>
+project                      project                        project
+└─generated/                 └─generated/                   ├─generated/
+  ├─assets/                    ├─assets/                    └─assets/
+  └─template/        --▶       <s>└─template/</s>        --▶
+    └─db/                        <s>└─db/</s>
+      └─ddl/                       <s>└─ddl/</s>
+        └─create.sql                 <s>└─create.sql</s>
+</pre>
+
+`create.sql` file would be deleted, `ddl` become empty and deleted, `db` become empty and deleted, `template` become empty and deleted, but this time `generated` directory not become empty because of `assets` and **not deleted**.
+
+<!-- usage -->
+
+<!-- commands -->
+
+# API
+
+{% include "api.md" %}
+
+# Related
+
+- [rm-up-cli](https://github.com/ozum/rm-up-cli): CLI for this API.
