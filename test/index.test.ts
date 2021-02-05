@@ -2,6 +2,7 @@
 import { basename, join, resolve } from "path";
 import tmp from "tmp-promise";
 import { pathExists, ensureDir, ensureFile } from "fs-extra";
+import { promises as fs } from "fs";
 
 import rmUp, { Options } from "../src/index";
 
@@ -31,7 +32,7 @@ beforeEach(async () => {
 
 afterEach(async () => {
   process.chdir(CWD);
-  // await fs.rmdir(tempDir, { recursive: true });
+  await fs.rmdir(tempDir, { recursive: true });
 });
 
 async function d(paths: Parameters<typeof rmUp>[0], options: Parameters<typeof rmUp>[1], expected: string | string[]) {
