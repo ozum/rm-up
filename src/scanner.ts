@@ -94,7 +94,7 @@ export default class Scanner {
   }
 
   /**
-   * Recursively readd directory contents from given path up to stop path and populates data in object.
+   * Recursively read directory contents from given path up to stop path and populates data in object.
    *
    * @param path is the path to read contents of.
    */

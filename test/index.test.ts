@@ -182,4 +182,12 @@ describe("rmUp", () => {
     const result = await rmUp(deletePaths, options);
     expect(result[0].endsWith(expected[0])).toBe(true);
   });
+
+  it("should not delete target path if it is not below stop dir. (Default stopDir = cwd)", async () => {
+    const deletePaths = join(tempDir, "b1/b2/b3/b4");
+    const expected: string[] = [];
+    const options = { deleteInitial: true };
+
+    await d(deletePaths, options, expected);
+  });
 });
