@@ -2,7 +2,6 @@
 import { basename, join, resolve } from "path";
 import tmp from "tmp-promise";
 import { pathExists, ensureDir, ensureFile } from "fs-extra";
-import { promises as fs } from "fs";
 
 import rmUp, { Options } from "../src/index";
 
@@ -32,7 +31,7 @@ beforeEach(async () => {
 
 afterEach(async () => {
   process.chdir(CWD);
-  await fs.rmdir(tempDir, { recursive: true });
+  // await fs.rmdir(tempDir, { recursive: true });
 });
 
 async function d(paths: Parameters<typeof rmUp>[0], options: Parameters<typeof rmUp>[1], expected: string | string[]) {
@@ -183,8 +182,16 @@ describe("rmUp", () => {
     expect(result[0].endsWith(expected[0])).toBe(true);
   });
 
-  it("should not delete target path if it is not below stop dir. (Default stopDir = cwd)", async () => {
+  it("should not delete target dir if it is not below stop dir. (Default stopDir = cwd)", async () => {
     const deletePaths = join(tempDir, "b1/b2/b3/b4");
+    const expected: string[] = [];
+    const options = { deleteInitial: true };
+
+    await d(deletePaths, options, expected);
+  });
+
+  it("should not delete target file if it is not below stop dir. (Default stopDir = cwd)", async () => {
+    const deletePaths = join(tempDir, "b1/b2/b2.txt");
     const expected: string[] = [];
     const options = { deleteInitial: true };
 
