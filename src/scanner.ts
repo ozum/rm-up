@@ -20,7 +20,7 @@ interface Dir {
 
 interface ConstructorOptions {
   cwd: string;
-  stop: string;
+  stop?: string;
   force: boolean;
   deleteInitial: boolean;
 }
@@ -37,7 +37,7 @@ const STATUS: Record<Status, Status> = {
  * @ignore
  */
 export default class Scanner {
-  #options: Required<ConstructorOptions>;
+  #options: ConstructorOptions;
   #index: Record<AbsolutePath, Dir> = {};
   public deletedFiles: Set<AbsolutePath> = new Set();
   public deletedDirs: Set<AbsolutePath> = new Set();
@@ -90,6 +90,7 @@ export default class Scanner {
    * @returns whether path is contained by stop path.
    */
   private belowStop(path: AbsolutePath): boolean {
+    if (this.#options.stop === undefined) return true;
     return path !== this.#options.stop && path.startsWith(this.#options.stop);
   }
 
@@ -144,6 +145,8 @@ export default class Scanner {
     const baseName = basename(path);
     const parentPath = join(path, "..");
     const deleteInitial = isInitial && this.#options.deleteInitial;
+
+    if (path === parentPath) return currentTopPath; // We are on root now and we should stop here.
 
     if (!dir && this.#index[parentPath]?.files.has(basename(baseName)) && deleteInitial) {
       this.deletedFiles.add(path);

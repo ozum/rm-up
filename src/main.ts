@@ -23,14 +23,14 @@ export interface Options {
 /**
  * Delete files or empty directories and their empty parents up to `stop` path excluding `stop` path.
  *
- * @param paths are the list of directories to be deleted with their empty parents.
+ * @param paths are the list of directories to be deleted with their empty parents. All paths must be under the same root. (e.g. you can not mix `C:` and `D:` in Windows)
  * @param options are options.
  */
 export async function rmUp(
   paths: string | string[],
-  { cwd = "", stop = "", force = false, deleteInitial = false, relative = true, dry, verbose }: Options = {}
+  { cwd = "", stop, force = false, deleteInitial = false, relative = true, dry, verbose }: Options = {}
 ): Promise<string[]> {
-  const scanner = new Scanner({ cwd: resolve(cwd), stop: resolve(cwd, stop), force, deleteInitial });
+  const scanner = new Scanner({ cwd: resolve(cwd), stop: stop === undefined ? undefined : resolve(cwd, stop), force, deleteInitial });
   const toDelete = await scanner.getPathsToDelete(paths);
   if (!dry && toDelete.length > 0)
     await Promise.all(toDelete.map((entry) => (entry.isDirectory ? fs.rmdir(entry.path, { recursive: true }) : fs.unlink(entry.path))));

@@ -57,7 +57,7 @@ describe("rmUp", () => {
     expect(await rmUp(["a1/NOT_AVAILABLE"], { ...OPTIONS, force: true })).toEqual([]);
   });
 
-  it("should not throw if given path does not a exist, but `force` is `true`.", async () => {
+  it("should not throw if given path does not exist, but `force` is `true`.", async () => {
     await expect(rmUp(["a1/NOT_AVAILABLE"], OPTIONS)).rejects.toThrow("ENOENT");
   });
 
@@ -69,7 +69,7 @@ describe("rmUp", () => {
     paths = [...paths, ...paths];
     const deletePaths = [...paths, ...paths, ...paths, ...paths, ...paths, ...paths, ...paths, ...paths, ...paths, ...paths, ...paths];
     const expected = ["a1/a2/a3", "b1/b2/b3"];
-    const options = { ...OPTIONS, force: true };
+    const options: Options = { ...OPTIONS, force: true };
 
     await d(deletePaths, options, expected);
   }, 10000);
@@ -77,7 +77,7 @@ describe("rmUp", () => {
   it("should delete empty parents of non existing path when `force` is `true`.", async () => {
     const deletePaths = "a1/a2/a3/a4/x/y/z";
     const expected = ["a1/a2/a3"];
-    const options = { ...OPTIONS, force: true };
+    const options: Options = { ...OPTIONS, force: true };
 
     await d(deletePaths, options, expected);
   });
@@ -85,7 +85,7 @@ describe("rmUp", () => {
   it("should not delete target path if it is non empty.", async () => {
     const deletePaths = "a1/a2";
     const expected: string[] = [];
-    const options = { ...OPTIONS, force: true };
+    const options: Options = { ...OPTIONS, force: true };
 
     await d(deletePaths, options, expected);
     expect(await pathExists(resolve(tempDir, "a1"))).toEqual(true);
@@ -94,7 +94,7 @@ describe("rmUp", () => {
   it("should delete target path even it is non empty if `deleteInitial` is true.", async () => {
     const deletePaths = ["a1/a2", "a1/a2"];
     const expected = ["a1"];
-    const options = { ...OPTIONS, force: true, deleteInitial: true };
+    const options: Options = { ...OPTIONS, force: true, deleteInitial: true };
 
     await d(deletePaths, options, expected);
   });
@@ -109,7 +109,7 @@ describe("rmUp", () => {
 
   it("should delete non empty dirs outside of cwd using absolute paths.", async () => {
     const deletePaths = resolve(tempDir, "a1/a2/a3/a4");
-    const options = { ...OPTIONS, cwd: undefined, stop: tempDir };
+    const options: Options = { ...OPTIONS, cwd: undefined, stop: tempDir };
 
     const result = await rmUp(deletePaths, options);
     expect(result.map((path) => basename(path))).toEqual(["a3"]);
@@ -118,7 +118,7 @@ describe("rmUp", () => {
   it("should delete file and it's empty parent directories.", async () => {
     const deletePaths = ["a1/a2/a3/a4", "a1/a2/a2.txt", "a1/a2/a2.txt"];
     const expected = ["a1"];
-    const options = { ...OPTIONS, deleteInitial: true, force: true };
+    const options: Options = { ...OPTIONS, deleteInitial: true, force: true };
 
     await d(deletePaths, options, expected);
   });
@@ -126,7 +126,7 @@ describe("rmUp", () => {
   it("should delete single file.", async () => {
     const deletePaths = ["d1/d11.txt"];
     const expected = ["d1/d11.txt"];
-    const options = { ...OPTIONS, deleteInitial: true };
+    const options: Options = { ...OPTIONS, deleteInitial: true };
 
     await d(deletePaths, options, expected);
   });
@@ -134,7 +134,7 @@ describe("rmUp", () => {
   it("should return all deleted entries if `verbose` is `true`.", async () => {
     const deletePaths = ["a1/a2/a3/a4", "a1/a2/a2.txt", "a1/a2/a2.txt"];
     const expected = ["a1", "a1/a2", "a1/a2/a2.txt", "a1/a2/a3", "a1/a2/a3/a4"];
-    const options = { ...OPTIONS, deleteInitial: true, force: true, verbose: true };
+    const options: Options = { ...OPTIONS, deleteInitial: true, force: true, verbose: true };
 
     await d(deletePaths, options, expected);
   });
@@ -142,7 +142,7 @@ describe("rmUp", () => {
   it("should exclude stop dir.", async () => {
     const deletePaths = "a1/a2/a3/a4";
     const expected = [] as string[];
-    const options = { ...OPTIONS, stop: "a1/a2/a3/a4" };
+    const options: Options = { ...OPTIONS, stop: "a1/a2/a3/a4" };
 
     await d(deletePaths, options, expected);
     expect(await pathExists(resolve(tempDir, "a1/a2/a3/a4"))).toEqual(true);
@@ -151,7 +151,7 @@ describe("rmUp", () => {
   it("should exclude stop dir (2).", async () => {
     const deletePaths = "a1/a2/a3/a4";
     const expected = ["a1/a2/a3/a4"];
-    const options = { ...OPTIONS, stop: "a1/a2/a3" };
+    const options: Options = { ...OPTIONS, stop: "a1/a2/a3" };
 
     await d(deletePaths, options, expected);
     expect(await pathExists(resolve(tempDir, "a1/a2/a3"))).toEqual(true);
@@ -161,7 +161,7 @@ describe("rmUp", () => {
     process.chdir(tempDir);
     const deletePaths = join(process.cwd(), "a1/a2/a3/a4");
     const expected = ["a1/a2/a3"];
-    const options = { ...OPTIONS, cwd: undefined, stop: undefined };
+    const options: Options = { ...OPTIONS, cwd: undefined, stop: undefined };
 
     await d(deletePaths, options, expected);
   });
@@ -169,7 +169,7 @@ describe("rmUp", () => {
   it("should delete paths with common parents.", async () => {
     const deletePaths = ["c1/c2/c3x/c4x", "c1/c2/c3y/c4y"];
     const expected = ["c1"];
-    const options = OPTIONS;
+    const options: Options = OPTIONS;
 
     await d(deletePaths, options, expected);
   });
@@ -177,16 +177,16 @@ describe("rmUp", () => {
   it("should return absolute paths.", async () => {
     const deletePaths = ["a1/a2/a3/a4"];
     const expected = ["a1/a2/a3"];
-    const options = { ...OPTIONS, relative: false };
+    const options: Options = { ...OPTIONS, relative: false };
 
     const result = await rmUp(deletePaths, options);
     expect(result[0].endsWith(expected[0])).toBe(true);
   });
 
-  it("should not delete target dir if it is not below stop dir. (Default stopDir = cwd)", async () => {
+  it("should not delete target dir if it is not below stop dir.", async () => {
     const deletePaths = join(tempDir, "b1/b2/b3/b4");
     const expected: string[] = [];
-    const options = { deleteInitial: true };
+    const options: Options = { deleteInitial: true, stop: join(tempDir, "x") };
 
     await d(deletePaths, options, expected);
   });
@@ -194,7 +194,7 @@ describe("rmUp", () => {
   it("should not delete target file if it is not below stop dir. (Default stopDir = cwd)", async () => {
     const deletePaths = join(tempDir, "b1/b2/b2.txt");
     const expected: string[] = [];
-    const options = { deleteInitial: true };
+    const options: Options = { deleteInitial: true, stop: join(tempDir, "x") };
 
     await d(deletePaths, options, expected);
   });

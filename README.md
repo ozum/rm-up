@@ -44,14 +44,12 @@ await rmUp(["generated/lib/math", "generated/util/helper"], { cwd: "/path/to/pro
 
 # Safety
 
-`rm-up` deletes only files below the `options.stop` to prevent unintentional delete operations. If the `options.stop` is not provided `rm-up` deletes only paths below the current working directory (`cwd`). Cwd is equal to `process.cwd()`, but could be provided using the `options.cwd`.
+`rm-up` deletes only files below the `options.stop` to prevent unintentional delete operations. If the `options.stop` is not provided `rm-up` deletes empty directories up to root.
 
 For example:
 
 - `await rmUp("/root/a/b/c", { stop: "root/x" }); // nothing would be deleted.`
-- `await rmUp("/root/a/b/c", { cwd: "root/x" }); // nothing would be deleted.`
-- `await rmUp("/root/a/b/c", { cwd: "root/a" }); // "b" and "c" deleted if empty.`
-- `process.chdir("root/a"); await rmUp("/root/a/b/c"); // "b" and "c" deleted if empty.`
+- `await rmUp("/root/a/b/c", { stop: "root/a" }); // "b" and "c" deleted if empty.`
 
 # Details
 
@@ -140,14 +138,15 @@ Delete files or empty directories and their empty parents up to `stop` path excl
 
 #### Parameters:
 
-| Name                | Type                              | Default value | Description                                                         |
-| ------------------- | --------------------------------- | ------------- | ------------------------------------------------------------------- |
-| `paths`             | _string_ \| _string_[]            | -             | are the list of directories to be deleted with their empty parents. |
-| `__namedParameters` | [_Options_](#interfacesoptionsmd) | ...           | -                                                                   |
+• **paths**: _string_ \| _string_[]
+
+are the list of directories to be deleted with their empty parents. All paths must be under the same root. (e.g. you can not mix `C:` and `D:` in Windows)
+
+• **\_\_namedParameters**: [_Options_](#interfacesoptionsmd)
 
 **Returns:** _Promise_<_string_[]\>
 
-Defined in: [main.ts:29](https://github.com/ozum/rm-up/blob/2829d96/src/main.ts#L29)
+Defined in: [main.ts:29](https://github.com/ozum/rm-up/blob/acd8159/src/main.ts#L29)
 
 # Interfaces
 
@@ -183,7 +182,7 @@ Options
 
 Current working directory to be used with relative input paths.
 
-Defined in: [main.ts:8](https://github.com/ozum/rm-up/blob/2829d96/src/main.ts#L8)
+Defined in: [main.ts:8](https://github.com/ozum/rm-up/blob/acd8159/src/main.ts#L8)
 
 ---
 
@@ -193,7 +192,7 @@ Defined in: [main.ts:8](https://github.com/ozum/rm-up/blob/2829d96/src/main.ts#L
 
 Delete target path (bottom directory) even it is non-empty directory. For example even if `c` directory of `a/b/c` has some files in it, `c` will be deleted.
 
-Defined in: [main.ts:14](https://github.com/ozum/rm-up/blob/2829d96/src/main.ts#L14)
+Defined in: [main.ts:14](https://github.com/ozum/rm-up/blob/acd8159/src/main.ts#L14)
 
 ---
 
@@ -203,7 +202,7 @@ Defined in: [main.ts:14](https://github.com/ozum/rm-up/blob/2829d96/src/main.ts#
 
 Dry run without deleting any files.
 
-Defined in: [main.ts:16](https://github.com/ozum/rm-up/blob/2829d96/src/main.ts#L16)
+Defined in: [main.ts:16](https://github.com/ozum/rm-up/blob/acd8159/src/main.ts#L16)
 
 ---
 
@@ -213,7 +212,7 @@ Defined in: [main.ts:16](https://github.com/ozum/rm-up/blob/2829d96/src/main.ts#
 
 If true, no error is thrown if input path is not a directory or does not exists. CWD is used by default.
 
-Defined in: [main.ts:12](https://github.com/ozum/rm-up/blob/2829d96/src/main.ts#L12)
+Defined in: [main.ts:12](https://github.com/ozum/rm-up/blob/acd8159/src/main.ts#L12)
 
 ---
 
@@ -223,7 +222,7 @@ Defined in: [main.ts:12](https://github.com/ozum/rm-up/blob/2829d96/src/main.ts#
 
 If true returns paths are relative to cwd, otherwise absolute paths.
 
-Defined in: [main.ts:20](https://github.com/ozum/rm-up/blob/2829d96/src/main.ts#L20)
+Defined in: [main.ts:20](https://github.com/ozum/rm-up/blob/acd8159/src/main.ts#L20)
 
 ---
 
@@ -233,7 +232,7 @@ Defined in: [main.ts:20](https://github.com/ozum/rm-up/blob/2829d96/src/main.ts#
 
 Path to stop searching empty directories up. Stop directory is not included (not deleted).
 
-Defined in: [main.ts:10](https://github.com/ozum/rm-up/blob/2829d96/src/main.ts#L10)
+Defined in: [main.ts:10](https://github.com/ozum/rm-up/blob/acd8159/src/main.ts#L10)
 
 ---
 
@@ -243,7 +242,7 @@ Defined in: [main.ts:10](https://github.com/ozum/rm-up/blob/2829d96/src/main.ts#
 
 If true returns all deleted directories and files. Otherwise returns only paths which delete command is executed agains.
 
-Defined in: [main.ts:18](https://github.com/ozum/rm-up/blob/2829d96/src/main.ts#L18)
+Defined in: [main.ts:18](https://github.com/ozum/rm-up/blob/acd8159/src/main.ts#L18)
 
 # Related
 

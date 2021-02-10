@@ -12,14 +12,12 @@ await rmUp(["generated/lib/math", "generated/util/helper"], { cwd: "/path/to/pro
 
 # Safety
 
-`rm-up` deletes only files below the `options.stop` to prevent unintentional delete operations. If the `options.stop` is not provided `rm-up` deletes only paths below the current working directory (`cwd`). Cwd is equal to `process.cwd()`, but could be provided using the `options.cwd`.
+`rm-up` deletes only files below the `options.stop` to prevent unintentional delete operations. If the `options.stop` is not provided `rm-up` deletes empty directories up to root.
 
 For example:
 
 - `await rmUp("/root/a/b/c", { stop: "root/x" }); // nothing would be deleted.`
-- `await rmUp("/root/a/b/c", { cwd: "root/x" }); // nothing would be deleted.`
-- `await rmUp("/root/a/b/c", { cwd: "root/a" }); // "b" and "c" deleted if empty.`
-- `process.chdir("root/a"); await rmUp("/root/a/b/c"); // "b" and "c" deleted if empty.`
+- `await rmUp("/root/a/b/c", { stop: "root/a" }); // "b" and "c" deleted if empty.`
 
 # Details
 
