@@ -17,7 +17,7 @@
           "author.url": "",
           "bugs": "https://github.com/ozum/rm-up/issues",
           "engines.node": ">= 12.0.0",
-          "files": ["dist", "!dist/**/@(*.spec|*.test)*", "!dist/**/__test__", "module-files", "@types"],
+          "files": ["dist", "!dist/**/@(*.spec|*.test)*", "!dist/**/__test__", "module-files"],
           "homepage": "https://github.com/ozum/rm-up",
           "repository": "ozum/rm-up",
           "scripts.build": "tsc",
@@ -63,11 +63,11 @@
           "devDependencies.readmeasy": "^0.2.7",
           "devDependencies.ts-jest": "^26.5.1",
           "devDependencies.ts-node-dev": "^1.1.1",
-          "devDependencies.typedoc": "^0.20.23",
+          "devDependencies.typedoc": "^0.20.24",
           "devDependencies.typedoc-neo-theme": "^1.1.0",
           "devDependencies.typedoc-plugin-example-tag": "^1.0.2",
           "devDependencies.typedoc-plugin-markdown": "^3.4.5",
-          "devDependencies.typescript": "^4.1.4",
+          "devDependencies.typescript": "^4.1.5",
           "devDependencies.walkdir": "^0.4.1"
         }
       }

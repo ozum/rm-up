@@ -1,6 +1,6 @@
 {
   "name": "rm-up",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Delete files or empty directories and their empty parents from bottom to up.",
   "author": {
     "name": "Özüm Eldoğan",
@@ -32,8 +32,7 @@
     "dist",
     "!dist/**/@(*.spec|*.test)*",
     "!dist/**/__test__",
-    "module-files",
-    "@types"
+    "module-files"
   ],
   "homepage": "https://github.com/ozum/rm-up",
   "bugs": "https://github.com/ozum/rm-up/issues",
@@ -88,11 +87,11 @@
     "tmp-promise": "^3.0.2",
     "ts-jest": "^26.5.1",
     "ts-node-dev": "^1.1.1",
-    "typedoc": "^0.20.23",
+    "typedoc": "^0.20.24",
     "typedoc-neo-theme": "^1.1.0",
     "typedoc-plugin-example-tag": "^1.0.2",
     "typedoc-plugin-markdown": "^3.4.5",
-    "typescript": "^4.1.4",
+    "typescript": "^4.1.5",
     "walkdir": "^0.4.1"
   }
 }
