@@ -1,6 +1,6 @@
 {
   "name": "rm-up",
-  "version": "0.0.0",
+  "version": "1.0.2",
   "description": "Delete files or empty directories and their empty parents from bottom to up.",
   "author": {
     "name": "Özüm Eldoğan",
