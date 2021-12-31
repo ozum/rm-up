@@ -33,7 +33,7 @@ export async function rmUp(
   const scanner = new Scanner({ cwd: resolve(cwd), stop: stop === undefined ? undefined : resolve(cwd, stop), force, deleteInitial });
   const toDelete = await scanner.getPathsToDelete(paths);
   if (!dry && toDelete.length > 0)
-    await Promise.all(toDelete.map((entry) => (entry.isDirectory ? fs.rmdir(entry.path, { recursive: true }) : fs.unlink(entry.path))));
+    await Promise.all(toDelete.map((entry) => (entry.isDirectory ? fs.rm(entry.path, { recursive: true }) : fs.unlink(entry.path))));
   let deletedPaths = verbose ? [...scanner.deletedDirs, ...scanner.deletedFiles] : toDelete.map((entry) => entry.path);
   if (relative) deletedPaths = deletedPaths.map((path) => getRelative(resolve(cwd), path));
   return deletedPaths.sort();

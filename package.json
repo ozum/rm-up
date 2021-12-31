@@ -1,11 +1,11 @@
 {
   "name": "rm-up",
-  "version": "1.0.3",
+  "version": "0.0.0",
   "description": "Delete files or empty directories and their empty parents from bottom to up.",
   "author": {
     "name": "Özüm Eldoğan",
     "email": "ozum@ozum.net",
-    "url": ""
+    "url": "https://www.ozum.net/"
   },
   "keywords": [
     "rm",
@@ -24,7 +24,7 @@
     "top"
   ],
   "engines": {
-    "node": ">= 12.0.0"
+    "node": ">=12.0.0"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -32,7 +32,8 @@
     "dist",
     "!dist/**/@(*.spec|*.test)*",
     "!dist/**/__test__",
-    "module-files"
+    "module-files",
+    "config"
   ],
   "homepage": "https://github.com/ozum/rm-up",
   "bugs": "https://github.com/ozum/rm-up/issues",
@@ -44,54 +45,50 @@
     "lint": "eslint --ignore-path .gitignore --cache --max-warnings 0 --ext js,jsx,ts,tsx,vue --fix .",
     "format": "prettier . --write",
     "release": "npm run readme && git pull && git add -A && git commit && git push --follow-tags",
-    "pretest": "not-sync coverage",
     "test": "jest --coverage",
     "readme": "node module-files/scripts/tsmod.js readme",
-    "prebuild": "not-sync dist",
     "build": "tsc",
-    "preinstall": "npx not-sync node_modules",
     "postinstall": "is-ci || husky install",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable",
     "tsmod": "node module-files/scripts/tsmod.js",
-    "yo:update": "yo tsmod:uninstall --no-install --force && yo 'tsmod' '--typedoc'"
+    "yo:update": "yo 'tsmod' '--force'"
   },
   "dependencies": {
-    "junk": "^3.1.0"
+    "junk": "^3.1.0",
+    "tslib": "^2.3.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
-    "@ozum/pinst": "^2.1.4",
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
     "@types/fs-extra": "^9.0.6",
-    "@types/jest": "^26.0.20",
-    "@types/node": "^14.14.25",
-    "@typescript-eslint/eslint-plugin": "^4.15.0",
-    "@typescript-eslint/parser": "^4.15.0",
-    "commitizen": "^4.2.3",
+    "@types/jest": "^27.0.3",
+    "@types/node": "^16.11.12",
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "@typescript-eslint/parser": "^5.6.0",
+    "commitizen": "^4.2.4",
     "concat-md": "^0.3.5",
-    "eslint": "^7.19.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-config-prettier": "^7.2.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jest": "^24.1.3",
-    "eslint-plugin-prettier": "^3.3.1",
+    "eslint": "^8.4.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^25.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "fs-extra": "^9.1.0",
-    "husky": "^5.0.9",
-    "is-ci": "^2.0.0",
-    "jest": "^26.6.3",
-    "lint-staged": "^10.5.4",
-    "not-sync": "^1.4.1",
+    "husky": "^7.0.4",
+    "is-ci": "^3.0.1",
+    "jest": "^27.4.3",
+    "lint-staged": "^12.1.2",
+    "pinst": "^2.1.6",
     "prettier": "^2.2.1",
     "readmeasy": "^0.2.7",
     "tmp-promise": "^3.0.2",
-    "ts-jest": "^26.5.1",
-    "ts-node-dev": "^1.1.1",
-    "typedoc": "^0.20.24",
-    "typedoc-neo-theme": "^1.1.0",
+    "ts-jest": "^27.1.1",
+    "ts-node-dev": "^1.1.8",
+    "typedoc": "^0.22.10",
     "typedoc-plugin-example-tag": "^1.0.2",
-    "typedoc-plugin-markdown": "^3.4.5",
-    "typescript": "^4.1.5",
+    "typedoc-plugin-markdown": "^3.11.7",
+    "typescript": "^4.5.2",
     "walkdir": "^0.4.1"
   }
 }

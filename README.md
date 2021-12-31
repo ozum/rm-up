@@ -9,15 +9,14 @@ Delete files or empty directories and their empty parents from bottom to up.
 - [Safety](#safety)
 - [Details](#details)
 - [API](#api)
-- [rm-up](#rm-up)
   - [Table of contents](#table-of-contents)
     - [Interfaces](#interfaces)
     - [Functions](#functions)
   - [Functions](#functions-1)
     - [default](#default)
+    - [rmUp](#rmup)
 - [Interfaces](#interfaces-1)
 - [Interface: Options](#interface-options)
-  - [Hierarchy](#hierarchy)
   - [Table of contents](#table-of-contents-1)
     - [Properties](#properties)
   - [Properties](#properties-1)
@@ -35,7 +34,7 @@ Delete files or empty directories and their empty parents from bottom to up.
 # Synopsis
 
 ```ts
-import { rmUp } from "rm-up";
+import rmUp from "rm-up";
 
 await rmUp("generated/template/db/ddl");
 
@@ -114,10 +113,6 @@ project                      project                        project
 
 <a name="readmemd"></a>
 
-rm-up
-
-# rm-up
-
 ## Table of contents
 
 ### Interfaces
@@ -127,26 +122,53 @@ rm-up
 ### Functions
 
 - [default](#default)
+- [rmUp](#rmup)
 
 ## Functions
 
 ### default
 
-▸ **default**(`paths`: _string_ \| _string_[], `__namedParameters?`: [_Options_](#interfacesoptionsmd)): _Promise_<_string_[]\>
+▸ `Const` **default**(`paths`, `__namedParameters?`): `Promise`<`string`[]\>
+
+**`deprecated`** Use named export: `import { rmUp } from "rm-up";` / `const { rmUp } = require("rm-up");`
+
+#### Parameters
+
+| Name                | Type                              |
+| :------------------ | :-------------------------------- |
+| `paths`             | `string` \| `string`[]            |
+| `__namedParameters` | [`Options`](#interfacesoptionsmd) |
+
+#### Returns
+
+`Promise`<`string`[]\>
+
+#### Defined in
+
+[index.ts:6](https://github.com/ozum/rm-up/blob/5369529/src/index.ts#L6)
+
+---
+
+### rmUp
+
+▸ **rmUp**(`paths`, `options?`): `Promise`<`string`[]\>
 
 Delete files or empty directories and their empty parents up to `stop` path excluding `stop` path.
 
-#### Parameters:
+#### Parameters
 
-• **paths**: _string_ \| _string_[]
+| Name      | Type                              | Description                                                                                                                                                |
+| :-------- | :-------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `paths`   | `string` \| `string`[]            | are the list of directories to be deleted with their empty parents. All paths must be under the same root. (e.g. you can not mix `C:` and `D:` in Windows) |
+| `options` | [`Options`](#interfacesoptionsmd) | are options.                                                                                                                                               |
 
-are the list of directories to be deleted with their empty parents. All paths must be under the same root. (e.g. you can not mix `C:` and `D:` in Windows)
+#### Returns
 
-• **\_\_namedParameters**: [_Options_](#interfacesoptionsmd)
+`Promise`<`string`[]\>
 
-**Returns:** _Promise_<_string_[]\>
+#### Defined in
 
-Defined in: [main.ts:29](https://github.com/ozum/rm-up/blob/f813938/src/main.ts#L29)
+[main.ts:29](https://github.com/ozum/rm-up/blob/5369529/src/main.ts#L29)
 
 # Interfaces
 
@@ -157,10 +179,6 @@ Defined in: [main.ts:29](https://github.com/ozum/rm-up/blob/f813938/src/main.ts#
 # Interface: Options
 
 Options
-
-## Hierarchy
-
-- **Options**
 
 ## Table of contents
 
@@ -178,71 +196,85 @@ Options
 
 ### cwd
 
-• `Optional` **cwd**: _undefined_ \| _string_
+• `Optional` **cwd**: `string`
 
 Current working directory to be used with relative input paths.
 
-Defined in: [main.ts:8](https://github.com/ozum/rm-up/blob/f813938/src/main.ts#L8)
+#### Defined in
+
+[main.ts:8](https://github.com/ozum/rm-up/blob/5369529/src/main.ts#L8)
 
 ---
 
 ### deleteInitial
 
-• `Optional` **deleteInitial**: _undefined_ \| _boolean_
+• `Optional` **deleteInitial**: `boolean`
 
 Delete target path (bottom directory) even it is non-empty directory. For example even if `c` directory of `a/b/c` has some files in it, `c` will be deleted.
 
-Defined in: [main.ts:14](https://github.com/ozum/rm-up/blob/f813938/src/main.ts#L14)
+#### Defined in
+
+[main.ts:14](https://github.com/ozum/rm-up/blob/5369529/src/main.ts#L14)
 
 ---
 
 ### dry
 
-• `Optional` **dry**: _undefined_ \| _boolean_
+• `Optional` **dry**: `boolean`
 
 Dry run without deleting any files.
 
-Defined in: [main.ts:16](https://github.com/ozum/rm-up/blob/f813938/src/main.ts#L16)
+#### Defined in
+
+[main.ts:16](https://github.com/ozum/rm-up/blob/5369529/src/main.ts#L16)
 
 ---
 
 ### force
 
-• `Optional` **force**: _undefined_ \| _boolean_
+• `Optional` **force**: `boolean`
 
 If true, no error is thrown if input path is not a directory or does not exists. CWD is used by default.
 
-Defined in: [main.ts:12](https://github.com/ozum/rm-up/blob/f813938/src/main.ts#L12)
+#### Defined in
+
+[main.ts:12](https://github.com/ozum/rm-up/blob/5369529/src/main.ts#L12)
 
 ---
 
 ### relative
 
-• `Optional` **relative**: _undefined_ \| _boolean_
+• `Optional` **relative**: `boolean`
 
 If true returns paths are relative to cwd, otherwise absolute paths.
 
-Defined in: [main.ts:20](https://github.com/ozum/rm-up/blob/f813938/src/main.ts#L20)
+#### Defined in
+
+[main.ts:20](https://github.com/ozum/rm-up/blob/5369529/src/main.ts#L20)
 
 ---
 
 ### stop
 
-• `Optional` **stop**: _undefined_ \| _string_
+• `Optional` **stop**: `string`
 
 Path to stop searching empty directories up. Stop directory is not included (not deleted).
 
-Defined in: [main.ts:10](https://github.com/ozum/rm-up/blob/f813938/src/main.ts#L10)
+#### Defined in
+
+[main.ts:10](https://github.com/ozum/rm-up/blob/5369529/src/main.ts#L10)
 
 ---
 
 ### verbose
 
-• `Optional` **verbose**: _undefined_ \| _boolean_
+• `Optional` **verbose**: `boolean`
 
 If true returns all deleted directories and files. Otherwise returns only paths which delete command is executed agains.
 
-Defined in: [main.ts:18](https://github.com/ozum/rm-up/blob/f813938/src/main.ts#L18)
+#### Defined in
+
+[main.ts:18](https://github.com/ozum/rm-up/blob/5369529/src/main.ts#L18)
 
 # Related
 

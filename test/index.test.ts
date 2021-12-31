@@ -32,7 +32,7 @@ beforeEach(async () => {
 
 afterEach(async () => {
   process.chdir(CWD);
-  await fs.rmdir(tempDir, { recursive: true });
+  await fs.rm(tempDir, { recursive: true });
 });
 
 async function d(paths: Parameters<typeof rmUp>[0], options: Parameters<typeof rmUp>[1], expected: string | string[]) {
