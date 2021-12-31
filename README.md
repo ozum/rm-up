@@ -35,7 +35,7 @@ Delete files or empty directories and their empty parents from bottom to up.
 # Synopsis
 
 ```ts
-import rmUp from "rm-up";
+import { rmUp } from "rm-up";
 
 await rmUp("generated/template/db/ddl");
 
