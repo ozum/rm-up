@@ -4,7 +4,7 @@ import tmp from "tmp-promise";
 import { pathExists, ensureDir, ensureFile } from "fs-extra";
 import { promises as fs } from "fs";
 
-import rmUp, { Options } from "../src/index";
+import deprecatedDefaultExport, { rmUp, Options } from "../src/index";
 
 let tempDir: string;
 let OPTIONS: Options;
@@ -197,5 +197,11 @@ describe("rmUp", () => {
     const options: Options = { deleteInitial: true, stop: join(tempDir, "x") };
 
     await d(deletePaths, options, expected);
+  });
+});
+
+describe("deprecated default export", () => {
+  it("should be the same as the named export", () => {
+    expect(deprecatedDefaultExport).toEqual(rmUp);
   });
 });
